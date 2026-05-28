@@ -93,10 +93,10 @@ export const remoteAgentPlugin: Plugin = async ({ $, directory }) => ({
         let output = [`Session: ${sid}`, `Host: ${cfg.user}@${cfg.host}`, `Workdir: ${args.workdir}`]
         if (bundle) {
           const bp = join("/tmp", `seed-${sid}.bundle`); await writeFile(bp, bundle.data)
-          await sshExec($, cfg, `rm -rf ${shellEscape(args.workdir)} && mkdir -p ${shellEscape(args.workdir)}`)
-          const uploadResult = await $`scp -o StrictHostKeyChecking=accept-new ${bp} ${cfg.user}@${cfg.host}:${shellEscape(args.workdir)}/seed.bundle`.quiet().nothrow()
+          await sshExec($, cfg, `rm -rf "${args.workdir}" && mkdir -p "${args.workdir}"`)
+          const uploadResult = await $`scp -o StrictHostKeyChecking=accept-new ${bp} ${cfg.user}@${cfg.host}:${args.workdir}/seed.bundle`.quiet().nothrow()
           await unlink(bp).catch(()=>{})
-          if (uploadResult.exitCode === 0) { await sshExec($, cfg, `cd ${shellEscape(args.workdir)} && git init && git bundle unbundle seed.bundle && git checkout HEAD`, args.workdir); output.push(`Code synced (layer ${bundle.layer}: ${bundle.desc})`) }
+          if (uploadResult.exitCode === 0) { await sshExec($, cfg, `cd "${args.workdir}" && git init && git bundle unbundle seed.bundle && git checkout HEAD`, args.workdir); output.push(`Code synced (layer ${bundle.layer}: ${bundle.desc})`) }
           else { sess.status = "failed"; sess.lastOutput = "Bundle upload failed"; saveSessions(); return { output: `Upload failed to ${cfg.user}@${cfg.host}.` } }
         } else { output.push("No git repository. Executing directly on remote.") }
         if (args.command) { const { stdout, stderr, exitCode } = await sshExec($, cfg, args.command, args.workdir); sess.status = exitCode === 0 ? "completed" : "failed"; sess.lastOutput = stdout || stderr || ""; sess.exitCode = exitCode; saveSessions(); output.push(`Command: ${args.command}`, `Exit: ${exitCode}`); if (stdout) output.push(`STDOUT:\n${stdout.slice(0,3000)}`); if (stderr) output.push(`STDERR:\n${stderr.slice(0,1000)}`) }

@@ -162,3 +162,21 @@ deepopencode/
   REFERENCE.md     — 工具/技能/Agent 参考
   plan.md          — 实施计划
   devlog.md        — 开发日志
+
+## 2026-05-27 — Review Round 2 修复
+
+### remote-agent: shellEscape 双包修复
+  问题: shellEscape 在 call site (remote-session) 和 sshExec 内部各调用一次, 导致 ''''/tmp/test'''' 畸形的 shell 命令
+  修复: 移除 call site 的 shellEscape, 统一由 sshExec 处理转义
+
+### deepagent: task-stop 竞态 + 输出丢失修复
+  问题: task-stop 设置 status=stopped 后 IIFE 继续执行, 最终覆盖 status=completed
+        task-output 从未返回实际输出内容
+  修复:
+    - TaskEntry 新增 output: string 字段
+    - IIFE 完成后检查 t.status === "stopped" → 不覆盖
+    - 失败时写入错误信息到 output
+    - task-output 返回 t.output 实际内容
+
+### 沙盒验证 ✅
+  3 plugins loaded, 0 errors

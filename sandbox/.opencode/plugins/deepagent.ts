@@ -2,7 +2,7 @@ import type { Plugin } from "@opencode-ai/plugin"
 import { tool } from "@opencode-ai/plugin"
 import { z } from "zod"
 
-interface TaskEntry { id: string; description: string; status: "running"|"completed"|"failed"|"stopped"; sessionID: string; controller: AbortController; createdAt: number }
+interface TaskEntry { id: string; description: string; status: "running"|"completed"|"failed"|"stopped"; sessionID: string; controller: AbortController; createdAt: number; output: string }
 const tasks = new Map<string, TaskEntry>(); let counter = 0
 
 export const deepagentPlugin: Plugin = async ({ client }) => ({
@@ -27,7 +27,7 @@ export const deepagentPlugin: Plugin = async ({ client }) => ({
       execute: async (args, ctx) => {
         counter++; const id = `bg_${Date.now()}_${counter}`
         const controller = new AbortController()
-        tasks.set(id, { id, description: args.description, status: "running", sessionID: ctx.sessionID, controller, createdAt: Date.now() })
+        tasks.set(id, { id, description: args.description, status: "running", sessionID: ctx.sessionID, controller, createdAt: Date.now(), output: "" })
         ;(async () => {
           try {
             const created: any = await client.session.create({
@@ -36,17 +36,21 @@ export const deepagentPlugin: Plugin = async ({ client }) => ({
               model: args.model ? { id: args.model, providerID: (args.model).split("/")[0] || args.model } : undefined,
             })
             const sid = created?.data?.id || created?.id
-            if (!sid) { tasks.get(id)!.status = "failed"; return }
+            if (!sid) { const t = tasks.get(id); if (t) { t.status = "failed"; t.output = "Session creation failed" } return }
             const result: any = await client.session.prompt({
               sessionID: sid, directory: ctx.directory,
               parts: [{ type: "text", text: args.prompt }],
               system: "Complete the requested task efficiently.",
             })
-            const output = result?.data?.parts?.find((p: any) => p.type === "text")?.text
+            const rawOutput = result?.data?.parts?.find((p: any) => p.type === "text")?.text
               || JSON.stringify(result?.data?.parts || result?.data || result || "done")
-            tasks.get(id)!.status = "completed"
+            const t = tasks.get(id)
+            if (!t || t.status === "stopped") return
+            t.output = rawOutput
+            t.status = "completed"
           } catch (e: any) {
-            tasks.get(id)!.status = "failed"
+            const t = tasks.get(id)
+            if (t && t.status !== "stopped") { t.status = "failed"; t.output = String(e?.message || e) }
           }
         })()
         return { output: `Task ${id} created: ${args.description}\nUse task-list to see all tasks.`, metadata: { taskId: id } }
@@ -61,9 +65,14 @@ export const deepagentPlugin: Plugin = async ({ client }) => ({
       },
     }),
     "task-output": tool({
-      description: "Get the output of a background task. Blocks until completion or timeout.",
-      args: z.object({ taskId: z.string(), timeout: z.number().min(1000).max(60000).default(30000) }),
-      execute: async (args) => { const t = tasks.get(args.taskId); return { output: t ? (t.status !== "running" ? `Task ${args.taskId} ${t.status}.` : `Task ${args.taskId} still running: ${t.description}. Check again.`) : `Task ${args.taskId} not found.` } },
+      description: "Get the output of a background task.",
+      args: z.object({ taskId: z.string() }),
+      execute: async (args) => {
+        const t = tasks.get(args.taskId)
+        if (!t) return { output: `Task ${args.taskId} not found.` }
+        if (t.status === "running") return { output: `Task ${args.taskId} still running: ${t.description}` }
+        return { output: `Task ${args.taskId} ${t.status}:\n${t.output || "(no output)"}` }
+      },
     }),
     "task-stop": tool({
       description: "Stop a running background task.",
