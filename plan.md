@@ -26,7 +26,7 @@ deepopencode = openmem + deepagent + remote-agent + deep-plan
 复刻 CC 的 extractMemories + autoDream 双重设计:
 - 即时提取: tool.execute.after → small_model → 追加日志
 - 定时巩固: 5道门控 → fork subagent → 4阶段(Orient→Gather→Consolidate→Prune)
-- 存储: ~/.opencode/memory/<project>/ markdown, 兼容 CC 格式
+- 存储: ~/.deepopencode/memory/<project>/ markdown, 兼容 CC 格式
 - 工具: check-memory, memory-search, memory-status, /dream
 - 零实验性 API 依赖, 全用 stable hooks
 

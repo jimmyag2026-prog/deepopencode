@@ -8,7 +8,7 @@ import { writeFile, readFile, unlink } from "fs/promises"
 
 interface SSHConfig { host: string; port: number; user: string }
 interface RemoteSession { id: string; host: string; user: string; port: number; workdir: string; status: "active"|"completed"|"failed"; lastOutput: string; exitCode?: number; createdAt: number }
-const SESSION_FILE = join(homedir(), ".opencode", "remote-sessions.json")
+const SESSION_FILE = join(homedir(), ".deepopencode", "remote-sessions.json")
 let sessions: Map<string, RemoteSession> = new Map()
 let counter = 0
 function loadSessions() { try { if (existsSync(SESSION_FILE)) { const data = JSON.parse(readFileSync(SESSION_FILE,"utf-8")); sessions = new Map(Object.entries(data)); counter = sessions.size } } catch {} }

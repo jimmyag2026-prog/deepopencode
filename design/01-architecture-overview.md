@@ -77,7 +77,7 @@ openmem/
 
 **存储结构:**
 ```
-~/.opencode/memory/<project-id>/
+~/.deepopencode/memory/<project-id>/
 ├── MEMORY.md             # 入口索引 (≤25KB)
 ├── <topic>.md            # 分类记忆文件
 └── logs/

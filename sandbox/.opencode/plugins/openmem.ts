@@ -6,7 +6,7 @@ import { mkdir, readFile, writeFile, readdir, stat, open } from "fs/promises"
 import { homedir } from "os"
 import { createHash } from "crypto"
 
-const MEMORY_ROOT = join(homedir(), ".opencode", "memory")
+const MEMORY_ROOT = join(homedir(), ".deepopencode", "memory")
 
 async function projectPath(root: string) { const id = createHash("sha256").update(root).digest("hex").slice(0, 12); return join(MEMORY_ROOT, id) }
 async function ensureDir(p: string) { await mkdir(p, { recursive: true }) }
@@ -138,7 +138,7 @@ export const openmemPlugin: Plugin = async ({ client, directory }) => {
   return {
     config: (cfg: any) => {
       cfg.agent = cfg.agent || {}
-      const memRoot = join(homedir(), ".opencode", "memory")
+      const memRoot = join(homedir(), ".deepopencode", "memory")
       cfg.agent["openmem-dream"] = { mode: "subagent", hidden: true, description: "Memory consolidation", permission: { edit: { [`${memRoot}/**`]: "allow", "*": "deny" }, bash: { "ls *": "allow", "find *": "allow", "grep *": "allow", "cat *": "allow", "stat *": "allow", "*": "deny" } } }
       cfg.agent["openmem-extract"] = { mode: "subagent", hidden: true, description: "Memory extraction", permission: { edit: "deny", bash: "deny" } }
     },

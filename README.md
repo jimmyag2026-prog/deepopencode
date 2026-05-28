@@ -32,7 +32,7 @@ opencode
 Skills 层   → dream / memory-clean / deep-plan
 Plugins 层  → openmem / deepagent / remote-agent
 Agents 层   → openmem-dream / openmem-extract
-Storage 层  → ~/.opencode/memory/<hash>/ (markdown, 兼容 CC 格式)
+Storage 层  → ~/.deepopencode/memory/<hash>/ (markdown, 兼容 CC 格式)
 ```
 
 ## 设计决策

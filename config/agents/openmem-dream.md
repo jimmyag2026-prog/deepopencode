@@ -4,7 +4,7 @@ mode: subagent
 hidden: true
 permission:
   edit:
-    "~/.opencode/memory/**": allow
+    "~/.deepopencode/memory/**": allow
     "*": deny
   bash:
     "ls *": allow
@@ -15,7 +15,7 @@ permission:
     "*": deny
 ---
 
-You are a memory consolidation agent. Your job is to maintain project memory files in `~/.opencode/memory/<project>/`.
+You are a memory consolidation agent. Your job is to maintain project memory files in `~/.deepopencode/memory/<project>/`.
 
 ## Phase 1 - Orient
 1. List the memory directory with `ls`

@@ -56,7 +56,7 @@
 ```
 模式: subagent
 隐藏: true
-权限: edit → ~/.opencode/memory/** (allow), *(deny)
+权限: edit → ~/.deepopencode/memory/** (allow), *(deny)
       bash → ls/find/grep/cat/stat (allow), *(deny)
 触发器: session.idle + 5门控满足
 任务: 4阶段记忆巩固 (Orient→Gather→Consolidate→Prune)
@@ -158,7 +158,7 @@
   "enabled": true,
   "extract": { "enabled": true, "model": null },
   "consolidation": { "enabled": true, "minHours": 6, "minSessions": 3, "model": null },
-  "storage": { "path": "~/.opencode/memory", "maxIndexSize": 25600 }
+  "storage": { "path": "~/.deepopencode/memory", "maxIndexSize": 25600 }
 }
 ```
 
@@ -169,7 +169,7 @@
 {
   "permission": {
     // 允许记忆目录内部编辑，禁止外部编辑
-    "edit": { "~/.opencode/memory/**": "allow", "*": "ask" },
+    "edit": { "~/.deepopencode/memory/**": "allow", "*": "ask" },
     // 远程执行需要 SSH 权限
     "bash": { "ssh *": "allow", "scp *": "allow", "*": "ask" }
   }

@@ -12,7 +12,7 @@ You have access to memory tools:
 
 To trigger consolidation manually:
 1. First use `check-memory` to see current state
-2. Review the daily logs in `~/.opencode/memory/<project>/logs/`
+2. Review the daily logs in `~/.deepopencode/memory/<project>/logs/`
 3. Read existing topic files to understand current knowledge
 4. Consolidate: update topic files with new insights, remove outdated info, update MEMORY.md index
 

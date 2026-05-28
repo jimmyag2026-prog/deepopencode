@@ -84,7 +84,7 @@ deep-plan:    42行 | 1技能
   #5 session.created 事件中 cancel timer + 添加 extractDebounce 防重入
   #6 使用 client.session.create().data?.id 兼容 SDK 返回格式
   #7 沙盒环境用绝对路径 .opencode/opencode.json
-  #8 remote-agent session 持久化到 ~/.opencode/remote-sessions.json
+  #8 remote-agent session 持久化到 ~/.deepopencode/remote-sessions.json
   #9-14 所有 minor 问题修复 (dead code清理, 锁逻辑修正, prompt替换等)
 
 ### 沙盒验证结果

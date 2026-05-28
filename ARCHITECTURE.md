@@ -18,7 +18,7 @@
 │  OpenCode Core │  16 hooks + SDK client + MCP + LSP     │
 │                 │  (不可修改, 全部基于 stable API)        │
 ├─────────────────────────────────────────────────────────┤
-│  Storage       │  ~/.opencode/memory/<hash>/             │
+│  Storage       │  ~/.deepopencode/memory/<hash>/          │
 │                 │  markdown 文件系统, 兼容 CC 格式         │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -87,7 +87,7 @@
 ### 3.2 存储结构
 
 ```
-~/.opencode/memory/<sha256(projectRoot)>/
+~/.deepopencode/memory/<sha256(projectRoot)>/
 ├── MEMORY.md          # 入口索引 (≤25KB)
 ├── architecture.md    # 架构相关
 ├── patterns.md        # 模式/约定
@@ -190,7 +190,7 @@ remote-exec(host, command, workdir?)
 ### 5.3 会话持久化
 
 ```
-~/.opencode/remote-sessions.json
+~/.deepopencode/remote-sessions.json
   → 每个 session: { id, host, user, port, workdir, status, lastOutput, exitCode }
   → 启动时加载, 每次操作后保存
 ```

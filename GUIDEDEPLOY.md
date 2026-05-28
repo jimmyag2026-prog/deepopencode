@@ -88,7 +88,7 @@ opencode --log-level DEBUG 2>&1 | grep "plugin.*path="
     "model": null
   },
   "storage": {
-    "path": "~/.opencode/memory",   // 记忆存储根目录
+    "path": "~/.deepopencode/memory",   // 记忆存储根目录
     "maxIndexSize": 25600           // MEMORY.md 最大字节数
   }
 }
@@ -121,7 +121,7 @@ rm .opencode/plugins/openmem.ts
 rm .opencode/plugins/deepagent.ts
 rm .opencode/plugins/remote-agent.ts
 rm -rf .opencode/skills/dream .opencode/skills/memory-clean .opencode/skills/deep-plan
-# 记忆文件保留在 ~/.opencode/memory/，手动删除
+# 记忆文件保留在 ~/.deepopencode/memory/，手动删除
 ```
 
 ## 故障排查
@@ -130,6 +130,6 @@ rm -rf .opencode/skills/dream .opencode/skills/memory-clean .opencode/skills/dee
 |------|------|
 | 插件未加载 | `ls .opencode/plugins/` 确认 .ts 文件存在（必须是扁平文件，非子目录） |
 | 工具不可用 | 重启 opencode（config 在启动时读取一次） |
-| 记忆未保存 | 检查 `~/.opencode/memory/<hash>/logs/` 是否生成 |
+| 记忆未保存 | 检查 `~/.deepopencode/memory/<hash>/logs/` 是否生成 |
 | 巩固未触发 | 需要满足门控：>= 6小时 + >= 3个新session |
 | Agent 找不到 | `config` hook 在启动时注册，确保 `openmem.ts` 已加载 |

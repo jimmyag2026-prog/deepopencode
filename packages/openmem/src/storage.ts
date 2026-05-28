@@ -9,7 +9,7 @@ export interface MemoryConfig {
 }
 
 export const DEFAULT_CONFIG: MemoryConfig = {
-  storagePath: join(homedir(), ".opencode", "memory"),
+  storagePath: join(homedir(), ".deepopencode", "memory"),
   maxIndexSize: 25600,
 }
 

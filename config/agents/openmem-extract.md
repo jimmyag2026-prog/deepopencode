@@ -4,7 +4,7 @@ mode: subagent
 hidden: true
 permission:
   edit:
-    "~/.opencode/memory/**": allow
+    "~/.deepopencode/memory/**": allow
     "*": deny
   bash:
     "*": deny
