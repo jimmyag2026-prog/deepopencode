@@ -1,0 +1,10 @@
+{
+  "name": "deepopencode-deepagent",
+  "version": "0.1.0",
+  "description": "Enhanced agent tools for OpenCode — Brief, Sleep, Task CRUD",
+  "main": "src/index.ts",
+  "files": ["src"],
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.15.0"
+  }
+}

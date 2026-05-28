@@ -1,0 +1,13 @@
+{
+  "name": "deepopencode-openmem",
+  "version": "0.1.0",
+  "description": "Claude-style persistent memory for OpenCode — extractMemories + autoDream",
+  "main": "src/index.ts",
+  "files": ["src", "skills"],
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.15.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}

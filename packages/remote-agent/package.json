@@ -1,0 +1,10 @@
+{
+  "name": "deepopencode-remote-agent",
+  "version": "0.1.0",
+  "description": "Remote agent execution for OpenCode — SSH bridge with git bundle transport",
+  "main": "src/index.ts",
+  "files": ["src"],
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.15.0"
+  }
+}

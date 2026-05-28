@@ -1,0 +1,13 @@
+{
+  "plugin": [
+    "./deepopencode/packages/openmem/src/index.ts",
+    "./deepopencode/packages/deepagent/src/index.ts",
+    "./deepopencode/packages/remote-agent/src/index.ts"
+  ],
+  "skills": {
+    "paths": [
+      "./deepopencode/packages/openmem/skills",
+      "./deepopencode/skills"
+    ]
+  }
+}
